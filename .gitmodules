@@ -1,3 +1,0 @@
-[submodule "thirdparty/iree"]
-	path = thirdparty/iree
-	url = https://github.com/V-Sekai/iree.git
