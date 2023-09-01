@@ -4,56 +4,61 @@
 
 cmake_minimum_required(VERSION 3.23)
 
-# Fetch iree tools
-message(STATUS "Downloading IREE tools.")
-include(FetchContent)
-set(FETCHCONTENT_QUIET FALSE)
-FetchContent_Declare(
-	iree-dist
-	URL https://github.com/openxla/iree/releases/download/candidate-20230415.490/iree-dist-20230415.490-linux-x86_64.tar.xz
-	DOWNLOAD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/.tmp
-	SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tools
-	DOWNLOAD_EXTRACT_TIMESTAMP NEW
-)
-FetchContent_MakeAvailable(iree-dist)
-
 #-------------------------------------------------------------------------------
 # Project configuration
 #-------------------------------------------------------------------------------
-
 project(
     iree-gd
     VERSION 0.0.1 
     LANGUAGES CXX C
 )
 
-find_package(Vulkan REQUIRED)
-
-# Ccache for sanity
+#-------------------------------------------------------------------------------
+# System packages and programs
+#-------------------------------------------------------------------------------
 find_program(CCACHE_FOUND ccache)
-if(CCACHE_FOUND)
-    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
-    set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache) # Less useful to do it for linking, see edit2
-endif(CCACHE_FOUND)
+find_program(PYTHON_FOUND python REQUIRED)
+
+#-------------------------------------------------------------------------------
+# Options
+#-------------------------------------------------------------------------------
+option(ENABLE_ASAN "Sanitize address with ASan." OFF) # ASan might not work: https://github.com/google/sanitizers/issues/85
 
 # Update default value for options
 option(IREE_BUILD_COMPILER "Builds the IREE compiler." OFF)
 option(IREE_BUILD_TESTS "Builds IREE unit tests." OFF)
 option(IREE_BUILD_SAMPLES "Builds IREE sample projects." ON)
 option(IREE_BUILD_BUNDLED_LLVM "Builds the bundled llvm-project (vs using installed)" OFF)
-
 option(IREE_HAL_DRIVER_LOCAL_SYNC "Enables the 'local-sync' runtime HAL driver" ON)
 option(IREE_HAL_DRIVER_LOCAL_TASK "Enables the 'local-task' runtime HAL driver" ON)
 option(IREE_HAL_EXECUTABLE_LOADER_VMVX_MODULE "Enables the VMVX module loader for local HAL drivers" ON)
 option(IREE_ENABLE_THREADING "Enables threading for IREE." ON)
 
-set(IREE_HOST_BIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tools/bin)
-
-# Set the c++ standard to c++17
+#-------------------------------------------------------------------------------
+# Project-wide properties
+#-------------------------------------------------------------------------------
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src CACHE STRING "Path to sources files (and header files).")
+set(SAMPLE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/sample)
+set(3RD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty CACHE STRING "Path to all the thirdparty libraries.")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_BINARY_DIR}/lib/cmake/mlir") # Extend module path to allow submodules to find AddMLIR
 
+if(CCACHE_FOUND)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+endif(CCACHE_FOUND)
+
+if(ENABLE_ASAN)
+    set(IREE_ENABLE_ASAN ON)
+    add_compile_options("$<IF:$<STREQUAL:${CMAKE_CXX_COMPILER_ID},MSVC>,/fsanitize=address,-fsanitize=address>")
+    add_link_options("$<IF:$<STREQUAL:${CMAKE_CXX_COMPILER_ID},MSVC>,/fsanitize=address,-fsanitize=address>")
+endif(ENABLE_ASAN)
+
+#-------------------------------------------------------------------------------
+# `godot-cpp`
+#-------------------------------------------------------------------------------
 set(GODOT_COMPILE_FLAGS)
 set(GODOT_LINKER_FLAGS)
 
@@ -116,7 +121,7 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 	set(BITS 64)
 endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
 
-if(CMAKE_BUILD_TYPE MATCHES Debug)
+if("${CMAKE_BUILD_TYPE}" MATCHES Debug OR "${CMAKE_BUILD_TYPE}" MATCHES RelWithDebInfo)
 	set(GODOT_CPP_BUILD_TYPE Debug)
 else()
 	set(GODOT_CPP_BUILD_TYPE Release)
@@ -130,51 +135,41 @@ if(ANDROID)
 	set(SYSTEM_NAME ${SYSTEM_NAME}.${ANDROID_ABI})
 endif()
 
-# NOTE: The RTTI setting must match what LLVM was compiled with and IREE
-#       defaults to RTTI disabled in `iree_copts.cmake`.
-#       RTTI is disabled for `dialect` target, but you may want to consider to
-#       to pass `-fno-rtti` as a global compile option by adding the line
-add_compile_options("-fno-rtti")
-
-# ASan might not work: https://github.com/google/sanitizers/issues/856
-# Sanitize for debugging
-#if("${CMAKE_BUILD_TYPE}" MATCHES Debug OR "${CMAKE_BUILD_TYPE}" MATCHES RelWithDebInfo)
-#	add_compile_options(-fsanitize=address)
-#	add_link_options(-fsanitize=address)
-#endif("${CMAKE_BUILD_TYPE}" MATCHES Debug OR "${CMAKE_BUILD_TYPE}" MATCHES RelWithDebInfo)
-
-set(3RD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty CACHE STRING "Path to all the thirdparty libraries.")
-set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src CACHE STRING "Path to sources files (and header files).")
-
 #-------------------------------------------------------------------------------
 # Third-party dependencies
 #-------------------------------------------------------------------------------
-
-# Extend module path to allow submodules to find AddMLIR
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_BINARY_DIR}/lib/cmake/mlir")
+if(CMAKE_SYSTEM_NAME STREQUAL  "Windows")
+    set(VOLK_STATICS_DEFINES "VK_USE_PLATFORM_WIN32_KHR")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    set(VOLK_STATICS_DEFINES "VK_USE_PLATFORM_MACOS_MVK")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Android")
+    set(VOLK_STATICS_DEFINES "VK_USE_PLATFORM_ANDROID_MVK")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "IOS")
+    set(VOLK_STATICS_DEFINES "VK_USE_PLATFORM_IOS_KHR")
+elseif(UNIX)
+    set(VOLK_STATICS_DEFINES "VK_USE_PLATFORM_XLIB_KHR")
+endif()
 
 add_subdirectory(${3RD_PARTY_DIR}/iree)
-
-add_compile_definitions(NO_SAFE_CAST) # To disable `typeid` usage (-fno-rtti)
 add_subdirectory(${3RD_PARTY_DIR}/godot-cpp)
+add_subdirectory(${3RD_PARTY_DIR}/volk)
 
 #-------------------------------------------------------------------------------
-# Top-level components
+# `iree.gd` library
 #-------------------------------------------------------------------------------
-
-set(BIN_NAME ${PROJECT_NAME}.${SYSTEM_NAME}.${BUILD_TYPE})
+set(LIB_NAME ${PROJECT_NAME}.${SYSTEM_NAME}.${BUILD_TYPE})
 file(GLOB_RECURSE SRCS ${SRC_DIR}/*.c**)
 file(GLOB_RECURSE HEADERS ${SRC_DIR}/*.h**)
 
-add_library(${BIN_NAME} SHARED ${SRCS} ${HEADERS})
+add_library(${LIB_NAME} SHARED ${SRCS} ${HEADERS})
 target_include_directories(
-	${BIN_NAME} 
+	${LIB_NAME} 
 	PRIVATE 
 	${3RD_PARTY_DIR}/godot-cpp ${3RD_PARTY_DIR}/godot-cpp/gdextension 
 	${3RD_PARTY_DIR}/iree/runtime/src
 )
 target_link_libraries(
-	${BIN_NAME}
+	${LIB_NAME}
 	iree::base
 	iree::hal
 	iree::hal::drivers::local_sync::sync_driver
@@ -187,38 +182,37 @@ target_link_libraries(
 	iree::hal::drivers::local_task::task_driver
 	iree::task::api
 	iree::hal::drivers::vulkan::registration
-	Vulkan::Vulkan
+    volk
 	godot-cpp
+)
+target_compile_options(
+    ${LIB_NAME}
+    PRIVATE
+    "$<IF:$<BOOL:${WIN32}>,/GR,-frtti>" # Enable RTTI.
 )
 set_property(
 	TARGET 
-	${BIN_NAME} 
+	${LIB_NAME} 
 	APPEND_STRING PROPERTY COMPILE_FLAGS 
 	${GODOT_COMPILE_FLAGS}
 )
 set_property(
 	TARGET 
-	${BIN_NAME} 
+	${LIB_NAME} 
 	APPEND_STRING PROPERTY LINK_FLAGS 
 	${GODOT_LINKER_FLAGS}
 )
 set_target_properties(
-	${BIN_NAME} PROPERTIES
+	${LIB_NAME} PROPERTIES
 	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
 	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
 	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
 
 # Copy the libraries into `sample/` folder
-# as assuming it contain a godot project to test things out.
-set(SAMPLE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/sample)
-if(EXISTS ${SAMPLE_DIR})
-	if(TARGET ${BIN_NAME})
-		add_custom_command(
-			TARGET ${BIN_NAME} POST_BUILD
-			COMMAND ${CMAKE_COMMAND} -E copy 
-					$<TARGET_FILE:${BIN_NAME}> 
-					${SAMPLE_DIR}/extension/iree-gd/$<TARGET_FILE_NAME:${BIN_NAME}>
-		)
-	endif()
-endif()
+add_custom_command(
+    TARGET ${LIB_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy 
+            $<TARGET_FILE:${LIB_NAME}> 
+            ${SAMPLE_DIR}/extensions/iree-gd/$<TARGET_FILE_NAME:${LIB_NAME}>
+)
