@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import argparse
 import tensorflow as tf
 import iree.compiler.tflite as iree_tflite_compile
