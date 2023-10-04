@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/yaml/libyaml.git
+	branch = master
+	commit = f8f760f7387d2cc56a2fc7b1be313a3bf3f7f58c
+	parent = 2e35b3f51e777468aad632441307558206f62085
+	method = merge
+	cmdver = 0.4.6
