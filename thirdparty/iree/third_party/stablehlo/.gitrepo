@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/shark-infra/stablehlo.git
+	branch = default
+	commit = b2e80ee330933ad9e92c24cab54eb63c2a5c18b9
+	parent = bd85759eab8486767d2ecdf31e93e5a4c1d046b4
+	method = merge
+	cmdver = 0.4.6
