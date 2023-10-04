@@ -155,6 +155,23 @@ target_include_directories(
 	${3RD_PARTY_DIR}/godot-cpp ${3RD_PARTY_DIR}/godot-cpp/gdextension 
 	${3RD_PARTY_DIR}/iree/runtime/src
 )
+if(APPLE)
+  target_link_libraries(
+    ${LIB_NAME}
+    iree::base
+    iree::hal
+    iree::hal::drivers::local_sync::sync_driver
+    iree::hal::local
+    iree::hal::local::loaders::embedded_elf_loader
+    iree::hal::local::loaders::vmvx_module_loader
+    iree::modules::hal
+    iree::vm
+    iree::vm::bytecode::module
+    iree::hal::drivers::local_task::task_driver
+    iree::task::api
+    godot-cpp
+  )
+else()
 target_link_libraries(
 	${LIB_NAME}
 	iree::base
@@ -171,6 +188,8 @@ target_link_libraries(
 	iree::hal::drivers::vulkan::registration
 	godot-cpp
 )
+endif()
+
 target_compile_options(
     ${LIB_NAME}
     PRIVATE
