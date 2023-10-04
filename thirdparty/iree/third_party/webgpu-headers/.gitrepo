@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/webgpu-native/webgpu-headers.git
+	branch = main
+	commit = b760e9e09da78e3d10b4cf5a8cdc9264ff74d08f
+	parent = 75470cf3debefbab1e3a55be777016bb78da7970
+	method = merge
+	cmdver = 0.4.6
