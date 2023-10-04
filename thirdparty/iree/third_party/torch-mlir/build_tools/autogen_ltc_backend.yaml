@@ -1,0 +1,96 @@
+blacklist:
+# Disabled in favour of `aten::index_put` which supports optional indices via `hacked_twin` JIT hack.
+# It also doesn't have confusing `unsafe` argument.
+- _index_put_impl
+
+# Additional ops which autogen is supported for but don't compile yet
+- _convolution
+- detach
+- item
+- size
+- copy_
+
+# Disabled for consistency with TS backend
+- lift_fresh_copy
+- rsub
+
+# Disabled in favour of functionalized alternatives
+- _reshape_alias
+- permute
+- select.int
+- squeeze.dim
+- transpose.int
+- expand
+- squeeze
+- unsqueeze
+- view
+- slice.Tensor
+- split.Tensor
+- split_with_sizes
+- unbind.int
+
+
+# List of supported ops that we don't want to do the full codegen for
+supported:
+- _to_copy
+- clone
+- _unsafe_view
+- unbind_copy.int
+- split_copy.Tensor
+- split_with_sizes_copy
+- index.Tensor
+- index_put
+
+# ops required for functionalization
+- lift
+- lift_fresh
+# Below are all operators that are "composite" in core,
+# but require us to explicitly re-enable functionalization in order to use them.
+# Why? These operators are all CompositeExplicitAutograd, which mean that they run
+# after functionalization,
+# but their implementations call view operators (which we need to functionalize away).
+- block_diag
+- new_empty_strided
+- narrow_copy
+- pixel_shuffle
+- pixel_unshuffle
+- select_backward
+- slice_backward
+- diagonal_backward
+- _trilinear
+- linalg_pinv.atol_rtol_tensor
+- logsumexp.out
+- t
+
+# List of ops that will take in symints for the size instead of ints
+symint:
+- new_empty_strided
+- expand_copy
+- narrow_copy
+- slice_backward
+- slice_copy.Tensor
+- split_copy.Tensor
+- slice_scatter
+- view_copy
+- as_strided_copy
+- as_strided_scatter
+- split_with_sizes_copy
+
+
+additional_ops:
+# Additional ops to support that are not supported by Torch-MLIR explicitly
+- _copy_from
+- _copy_from_and_resize
+
+# List of non native ops that we only want to do IR node class generation for
+non_native:
+  - func: scalar(Scalar value, ScalarType type) -> Tensor
+    opkind: at::prim::Constant
+    properties:
+      - ShapeCompute
+      - TreatScalarsAsConstants
+  - func: expand(Tensor input, int[] size, bool is_scalar_expand) -> Tensor
+  - func: cast(Tensor input, ScalarType dtype, ScalarType? stype) -> Tensor
+    opkind: ltc_cast
+    properties:
+      - ShapeCompute
