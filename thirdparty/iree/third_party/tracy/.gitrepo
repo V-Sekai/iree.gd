@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/wolfpld/tracy.git
+	branch = master
+	commit = da1bc2b60eed1a217af18324e60bc5fbc334ff20
+	parent = 90abc2818ef6d58f178ddaeefa21d907f1adeaf4
+	method = merge
+	cmdver = 0.4.6
