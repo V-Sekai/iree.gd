@@ -232,7 +232,7 @@ endif()
 # Apple platforms support Metal instead of Vulkan, though MoltenVK may work.
 set(IREE_HAL_DRIVER_VULKAN_DEFAULT ${IREE_HAL_DRIVER_DEFAULTS})
 if(APPLE)
-  set(IREE_HAL_DRIVER_VULKAN_DEFAULT OFF)
+  set(IREE_HAL_DRIVER_VULKAN_DEFAULT ON)
 endif()
 
 # Metal support is enabled if it's one of the Apple platforms.

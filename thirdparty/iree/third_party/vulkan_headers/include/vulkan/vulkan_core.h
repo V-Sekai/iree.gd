@@ -8362,68 +8362,6 @@ VKAPI_ATTR void VKAPI_CALL vkCmdDecodeVideoKHR(
     const VkVideoDecodeInfoKHR*                 pDecodeInfo);
 #endif
 
-
-// VK_KHR_video_decode_h264 is a preprocessor guard. Do not pass it to API calls.
-#define VK_KHR_video_decode_h264 1
-#include "vk_video/vulkan_video_codec_h264std.h"
-#include "vk_video/vulkan_video_codec_h264std_decode.h"
-#define VK_KHR_VIDEO_DECODE_H264_SPEC_VERSION 8
-#define VK_KHR_VIDEO_DECODE_H264_EXTENSION_NAME "VK_KHR_video_decode_h264"
-
-typedef enum VkVideoDecodeH264PictureLayoutFlagBitsKHR {
-    VK_VIDEO_DECODE_H264_PICTURE_LAYOUT_PROGRESSIVE_KHR = 0,
-    VK_VIDEO_DECODE_H264_PICTURE_LAYOUT_INTERLACED_INTERLEAVED_LINES_BIT_KHR = 0x00000001,
-    VK_VIDEO_DECODE_H264_PICTURE_LAYOUT_INTERLACED_SEPARATE_PLANES_BIT_KHR = 0x00000002,
-    VK_VIDEO_DECODE_H264_PICTURE_LAYOUT_FLAG_BITS_MAX_ENUM_KHR = 0x7FFFFFFF
-} VkVideoDecodeH264PictureLayoutFlagBitsKHR;
-typedef VkFlags VkVideoDecodeH264PictureLayoutFlagsKHR;
-typedef struct VkVideoDecodeH264ProfileInfoKHR {
-    VkStructureType                              sType;
-    const void*                                  pNext;
-    StdVideoH264ProfileIdc                       stdProfileIdc;
-    VkVideoDecodeH264PictureLayoutFlagBitsKHR    pictureLayout;
-} VkVideoDecodeH264ProfileInfoKHR;
-
-typedef struct VkVideoDecodeH264CapabilitiesKHR {
-    VkStructureType         sType;
-    void*                   pNext;
-    StdVideoH264LevelIdc    maxLevelIdc;
-    VkOffset2D              fieldOffsetGranularity;
-} VkVideoDecodeH264CapabilitiesKHR;
-
-typedef struct VkVideoDecodeH264SessionParametersAddInfoKHR {
-    VkStructureType                            sType;
-    const void*                                pNext;
-    uint32_t                                   stdSPSCount;
-    const StdVideoH264SequenceParameterSet*    pStdSPSs;
-    uint32_t                                   stdPPSCount;
-    const StdVideoH264PictureParameterSet*     pStdPPSs;
-} VkVideoDecodeH264SessionParametersAddInfoKHR;
-
-typedef struct VkVideoDecodeH264SessionParametersCreateInfoKHR {
-    VkStructureType                                        sType;
-    const void*                                            pNext;
-    uint32_t                                               maxStdSPSCount;
-    uint32_t                                               maxStdPPSCount;
-    const VkVideoDecodeH264SessionParametersAddInfoKHR*    pParametersAddInfo;
-} VkVideoDecodeH264SessionParametersCreateInfoKHR;
-
-typedef struct VkVideoDecodeH264PictureInfoKHR {
-    VkStructureType                         sType;
-    const void*                             pNext;
-    const StdVideoDecodeH264PictureInfo*    pStdPictureInfo;
-    uint32_t                                sliceCount;
-    const uint32_t*                         pSliceOffsets;
-} VkVideoDecodeH264PictureInfoKHR;
-
-typedef struct VkVideoDecodeH264DpbSlotInfoKHR {
-    VkStructureType                           sType;
-    const void*                               pNext;
-    const StdVideoDecodeH264ReferenceInfo*    pStdReferenceInfo;
-} VkVideoDecodeH264DpbSlotInfoKHR;
-
-
-
 // VK_KHR_dynamic_rendering is a preprocessor guard. Do not pass it to API calls.
 #define VK_KHR_dynamic_rendering 1
 #define VK_KHR_DYNAMIC_RENDERING_SPEC_VERSION 1
@@ -9576,99 +9514,6 @@ typedef struct VkPhysicalDeviceShaderClockFeaturesKHR {
     VkBool32           shaderSubgroupClock;
     VkBool32           shaderDeviceClock;
 } VkPhysicalDeviceShaderClockFeaturesKHR;
-
-
-
-// VK_KHR_video_decode_h265 is a preprocessor guard. Do not pass it to API calls.
-#define VK_KHR_video_decode_h265 1
-#include "vk_video/vulkan_video_codec_h265std.h"
-#include "vk_video/vulkan_video_codec_h265std_decode.h"
-#define VK_KHR_VIDEO_DECODE_H265_SPEC_VERSION 7
-#define VK_KHR_VIDEO_DECODE_H265_EXTENSION_NAME "VK_KHR_video_decode_h265"
-typedef struct VkVideoDecodeH265ProfileInfoKHR {
-    VkStructureType           sType;
-    const void*               pNext;
-    StdVideoH265ProfileIdc    stdProfileIdc;
-} VkVideoDecodeH265ProfileInfoKHR;
-
-typedef struct VkVideoDecodeH265CapabilitiesKHR {
-    VkStructureType         sType;
-    void*                   pNext;
-    StdVideoH265LevelIdc    maxLevelIdc;
-} VkVideoDecodeH265CapabilitiesKHR;
-
-typedef struct VkVideoDecodeH265SessionParametersAddInfoKHR {
-    VkStructureType                            sType;
-    const void*                                pNext;
-    uint32_t                                   stdVPSCount;
-    const StdVideoH265VideoParameterSet*       pStdVPSs;
-    uint32_t                                   stdSPSCount;
-    const StdVideoH265SequenceParameterSet*    pStdSPSs;
-    uint32_t                                   stdPPSCount;
-    const StdVideoH265PictureParameterSet*     pStdPPSs;
-} VkVideoDecodeH265SessionParametersAddInfoKHR;
-
-typedef struct VkVideoDecodeH265SessionParametersCreateInfoKHR {
-    VkStructureType                                        sType;
-    const void*                                            pNext;
-    uint32_t                                               maxStdVPSCount;
-    uint32_t                                               maxStdSPSCount;
-    uint32_t                                               maxStdPPSCount;
-    const VkVideoDecodeH265SessionParametersAddInfoKHR*    pParametersAddInfo;
-} VkVideoDecodeH265SessionParametersCreateInfoKHR;
-
-typedef struct VkVideoDecodeH265PictureInfoKHR {
-    VkStructureType                         sType;
-    const void*                             pNext;
-    const StdVideoDecodeH265PictureInfo*    pStdPictureInfo;
-    uint32_t                                sliceSegmentCount;
-    const uint32_t*                         pSliceSegmentOffsets;
-} VkVideoDecodeH265PictureInfoKHR;
-
-typedef struct VkVideoDecodeH265DpbSlotInfoKHR {
-    VkStructureType                           sType;
-    const void*                               pNext;
-    const StdVideoDecodeH265ReferenceInfo*    pStdReferenceInfo;
-} VkVideoDecodeH265DpbSlotInfoKHR;
-
-
-
-// VK_KHR_global_priority is a preprocessor guard. Do not pass it to API calls.
-#define VK_KHR_global_priority 1
-#define VK_MAX_GLOBAL_PRIORITY_SIZE_KHR   16U
-#define VK_KHR_GLOBAL_PRIORITY_SPEC_VERSION 1
-#define VK_KHR_GLOBAL_PRIORITY_EXTENSION_NAME "VK_KHR_global_priority"
-
-typedef enum VkQueueGlobalPriorityKHR {
-    VK_QUEUE_GLOBAL_PRIORITY_LOW_KHR = 128,
-    VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_KHR = 256,
-    VK_QUEUE_GLOBAL_PRIORITY_HIGH_KHR = 512,
-    VK_QUEUE_GLOBAL_PRIORITY_REALTIME_KHR = 1024,
-    VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT = VK_QUEUE_GLOBAL_PRIORITY_LOW_KHR,
-    VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT = VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_KHR,
-    VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT = VK_QUEUE_GLOBAL_PRIORITY_HIGH_KHR,
-    VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT = VK_QUEUE_GLOBAL_PRIORITY_REALTIME_KHR,
-    VK_QUEUE_GLOBAL_PRIORITY_MAX_ENUM_KHR = 0x7FFFFFFF
-} VkQueueGlobalPriorityKHR;
-typedef struct VkDeviceQueueGlobalPriorityCreateInfoKHR {
-    VkStructureType             sType;
-    const void*                 pNext;
-    VkQueueGlobalPriorityKHR    globalPriority;
-} VkDeviceQueueGlobalPriorityCreateInfoKHR;
-
-typedef struct VkPhysicalDeviceGlobalPriorityQueryFeaturesKHR {
-    VkStructureType    sType;
-    void*              pNext;
-    VkBool32           globalPriorityQuery;
-} VkPhysicalDeviceGlobalPriorityQueryFeaturesKHR;
-
-typedef struct VkQueueFamilyGlobalPriorityPropertiesKHR {
-    VkStructureType             sType;
-    void*                       pNext;
-    uint32_t                    priorityCount;
-    VkQueueGlobalPriorityKHR    priorities[VK_MAX_GLOBAL_PRIORITY_SIZE_KHR];
-} VkQueueFamilyGlobalPriorityPropertiesKHR;
-
 
 
 // VK_KHR_driver_properties is a preprocessor guard. Do not pass it to API calls.
@@ -12960,16 +12805,6 @@ typedef struct VkFilterCubicImageViewImageFormatPropertiesEXT {
 #define VK_QCOM_RENDER_PASS_SHADER_RESOLVE_EXTENSION_NAME "VK_QCOM_render_pass_shader_resolve"
 
 
-// VK_EXT_global_priority is a preprocessor guard. Do not pass it to API calls.
-#define VK_EXT_global_priority 1
-#define VK_EXT_GLOBAL_PRIORITY_SPEC_VERSION 2
-#define VK_EXT_GLOBAL_PRIORITY_EXTENSION_NAME "VK_EXT_global_priority"
-typedef VkQueueGlobalPriorityKHR VkQueueGlobalPriorityEXT;
-
-typedef VkDeviceQueueGlobalPriorityCreateInfoKHR VkDeviceQueueGlobalPriorityCreateInfoEXT;
-
-
-
 // VK_EXT_external_memory_host is a preprocessor guard. Do not pass it to API calls.
 #define VK_EXT_external_memory_host 1
 #define VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION 1
@@ -15983,18 +15818,6 @@ typedef struct VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT {
     VkBool32           primitivesGeneratedQueryWithRasterizerDiscard;
     VkBool32           primitivesGeneratedQueryWithNonZeroStreams;
 } VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT;
-
-
-
-// VK_EXT_global_priority_query is a preprocessor guard. Do not pass it to API calls.
-#define VK_EXT_global_priority_query 1
-#define VK_EXT_GLOBAL_PRIORITY_QUERY_SPEC_VERSION 1
-#define VK_EXT_GLOBAL_PRIORITY_QUERY_EXTENSION_NAME "VK_EXT_global_priority_query"
-#define VK_MAX_GLOBAL_PRIORITY_SIZE_EXT   VK_MAX_GLOBAL_PRIORITY_SIZE_KHR
-typedef VkPhysicalDeviceGlobalPriorityQueryFeaturesKHR VkPhysicalDeviceGlobalPriorityQueryFeaturesEXT;
-
-typedef VkQueueFamilyGlobalPriorityPropertiesKHR VkQueueFamilyGlobalPriorityPropertiesEXT;
-
 
 
 // VK_EXT_image_view_min_lod is a preprocessor guard. Do not pass it to API calls.
