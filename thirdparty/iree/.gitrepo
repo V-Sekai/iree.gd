@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/openxla/iree.git
+	branch = main
+	commit = bb51f6f1a1b4ee619fb09a7396f449dadb211447
+	parent = 08a9ea9a55ffccefea0c04de057b4e2eb782d1f7
+	method = merge
+	cmdver = 0.4.6
