@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/KhronosGroup/Vulkan-Headers.git
+	branch = main
+	commit = 7e691380166fb1cd9b193ac9db896bc23a4ea9ad
+	parent = 4980b13035d29af52322572a36b508707199f0e6
+	method = merge
+	cmdver = 0.4.6
