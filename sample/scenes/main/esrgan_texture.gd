@@ -54,6 +54,9 @@ func upscale():
 				[1, 50, 50, 3]
 			)
 			var output_tensor := module.call_module("module.main", [input_tensor]).front() as IREETensor
+			if output_tensor == null:
+				printerr("Module was not found.")
+				return
 			var raw_output_data := output_tensor.get_data().to_float32_array()
 			var clean_output_data := PackedByteArray()
 			clean_output_data.resize(raw_output_data.size())

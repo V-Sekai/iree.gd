@@ -12,3 +12,9 @@
 # Caches
 /.cache/
 /.ccls-cache/
+
+.DS_Store
+.sconsign.dblite
+tools/tflite-vulkan-vmfb-generate/
+thirdparty/build/
+*.os
