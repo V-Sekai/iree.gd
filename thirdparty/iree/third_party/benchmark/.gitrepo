@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/google/benchmark.git
+	branch = main
+	commit = ae32372385fa9c23fedf11fdf58315ac55ec4692
+	parent = ade63cf11b030c96a165d3fe24034770b38143dc
+	method = merge
+	cmdver = 0.4.6
