@@ -1,3 +1,0 @@
-[submodule "third_party/hip-build-deps"]
-	path = third_party/hip-build-deps
-	url = https://github.com/shark-infra/hip-build-deps.git
