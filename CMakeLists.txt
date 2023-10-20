@@ -155,21 +155,25 @@ target_include_directories(
 	${3RD_PARTY_DIR}/iree/runtime/src
 )
 target_link_libraries(
-	${LIB_NAME}
-	iree::base
-	iree::hal
-	iree::hal::drivers::local_sync::sync_driver
-	iree::hal::local
-	iree::hal::local::loaders::embedded_elf_loader
-	iree::hal::local::loaders::vmvx_module_loader
-	iree::modules::hal
-	iree::vm
-	iree::vm::bytecode::module
-	iree::hal::drivers::local_task::task_driver
-	iree::task::api
-	iree::hal::drivers::vulkan::registration
-	godot-cpp
+    ${LIB_NAME}
+    iree::base
+    iree::hal
+    iree::hal::drivers::local_sync::sync_driver
+    iree::hal::local
+    iree::hal::local::loaders::embedded_elf_loader
+    iree::hal::local::loaders::vmvx_module_loader
+    iree::modules::hal
+    iree::vm
+    iree::vm::bytecode::module
+    iree::hal::drivers::local_task::task_driver
+    iree::task::api
+    godot-cpp
 )
+
+if(NOT APPLE)
+    target_link_libraries(${LIB_NAME} iree::hal::drivers::vulkan::registration)
+endif()
+
 target_compile_options(
     ${LIB_NAME}
     PRIVATE
