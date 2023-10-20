@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/shark-infra/ROCm-Device-Libs
+	branch = 75582533c0bf1d84c07344880f599edb40363333
+	commit = 75582533c0bf1d84c07344880f599edb40363333
+	parent = edff4b8ca8888a00b24c38668cd6863de789c2b8
+	method = merge
+	cmdver = 0.4.6
