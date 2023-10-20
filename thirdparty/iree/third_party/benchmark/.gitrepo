@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/google/benchmark.git
 	branch = main
-	commit = ae32372385fa9c23fedf11fdf58315ac55ec4692
-	parent = ade63cf11b030c96a165d3fe24034770b38143dc
+	commit = f30c99a7c861e8cabc6d3d9c0b60a4f218c7f87a
+	parent = bbc2cd44e94543c11bc00c66affcacea9f6421ba
 	method = merge
 	cmdver = 0.4.6
