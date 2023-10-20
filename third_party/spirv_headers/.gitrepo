@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/KhronosGroup/SPIRV-Headers.git
+	branch = b730938c033ede3572b660ab019b438509ba24d9
+	commit = b730938c033ede3572b660ab019b438509ba24d9
+	parent = e331c67fd59a7ab78d23b6886dd80b93bab51214
+	method = merge
+	cmdver = 0.4.6
