@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/shark-infra/hip-build-deps.git
+	branch = dedd03ce0e5d01f000dce60e463d0423cef1a62a
+	commit = dedd03ce0e5d01f000dce60e463d0423cef1a62a
+	parent = 91206ea12249df11afc414fbf1e19ac34192dd5a
+	method = merge
+	cmdver = 0.4.6
