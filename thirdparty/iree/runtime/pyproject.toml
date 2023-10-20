@@ -1,0 +1,12 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "cmake",
+    "nanobind>=1.4.0",
+    "ninja",
+    "numpy",
+    "packaging",
+    "PyYAML",
+]
+build-backend = "setuptools.build_meta"
