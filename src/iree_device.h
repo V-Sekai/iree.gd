@@ -5,9 +5,7 @@
 #include <iree/hal/api.h>
 #include <iree/vm/api.h>
 
-#include <godot_cpp/classes/global_constants.hpp>
-
-using namespace godot;
+#include "core/error/error_list.h"
 
 /* Simple structure that yield and manage device information. */
 class IREEDevice {

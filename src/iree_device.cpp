@@ -1,9 +1,7 @@
 #include "iree_device.h"
 
-#include <godot_cpp/core/error_macros.hpp>
-#include <godot_cpp/classes/rendering_device.hpp>
-#include <godot_cpp/classes/rendering_server.hpp>
-#include <godot_cpp/variant/utility_functions.hpp>
+#include "servers/rendering/rendering_device.h"
+#include "servers/rendering_server.h"
 
 #include <iree/hal/local/executable_loader.h>
 #include <iree/hal/local/loaders/embedded_elf_loader.h>
@@ -16,8 +14,6 @@
 #include "iree_error.h"
 
 #define IREE_MAX_EXECUTOR_COUNT 8
-
-using namespace godot;
 
 IREEDevice::IREEDevice()
 :

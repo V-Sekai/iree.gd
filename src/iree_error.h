@@ -3,8 +3,6 @@
 
 #include <iree/base/api.h>
 
-#include <godot_cpp/variant/utility_functions.hpp>
-
 #define IREE_ERR_MSG(mp_status, mp_message) \
 { \
     iree_status_t status = (mp_status); \

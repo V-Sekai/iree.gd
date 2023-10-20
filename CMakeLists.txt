@@ -27,7 +27,7 @@ option(ENABLE_ASAN "Sanitize address with ASan." OFF) # ASan might not work: htt
 # Update default value for options
 option(IREE_BUILD_COMPILER "Builds the IREE compiler." OFF)
 option(IREE_BUILD_TESTS "Builds IREE unit tests." OFF)
-option(IREE_BUILD_SAMPLES "Builds IREE sample projects." ON)
+option(IREE_BUILD_SAMPLES "Builds IREE sample projects." OFF)
 option(IREE_BUILD_BUNDLED_LLVM "Builds the bundled llvm-project (vs using installed)" OFF)
 option(IREE_HAL_DRIVER_LOCAL_SYNC "Enables the 'local-sync' runtime HAL driver" ON)
 option(IREE_HAL_DRIVER_LOCAL_TASK "Enables the 'local-task' runtime HAL driver" ON)
@@ -92,7 +92,7 @@ else()
 	set(GODOT_COMPILE_FLAGS "-fPIC -g -Wwrite-strings")
 	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wchar-subscripts -Wcomment -Wdisabled-optimization")
 	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wformat -Wformat=2 -Wformat-security -Wformat-y2k")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wimport -Winit-self -Winline -Winvalid-pch -Werror")
+	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wimport -Winit-self -Winline -Winvalid-pch")
 	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wmissing-braces -Wmissing-format-attribute")
 	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wpointer-arith")
 	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wredundant-decls -Wreturn-type -Wsequence-point")
@@ -147,11 +147,12 @@ set(LIB_NAME ${PROJECT_NAME}.${SYSTEM_NAME}.${BUILD_TYPE})
 file(GLOB_RECURSE SRCS ${SRC_DIR}/*.c**)
 file(GLOB_RECURSE HEADERS ${SRC_DIR}/*.h**)
 
-add_library(${LIB_NAME} SHARED ${SRCS} ${HEADERS})
+add_library(${LIB_NAME} STATIC ${SRCS} ${HEADERS})
 target_include_directories(
 	${LIB_NAME} 
 	PRIVATE 
-	${3RD_PARTY_DIR}/godot-cpp ${3RD_PARTY_DIR}/godot-cpp/gdextension 
+	../../
+	../../platform/macos
 	${3RD_PARTY_DIR}/iree/runtime/src
 )
 target_link_libraries(
@@ -167,7 +168,6 @@ target_link_libraries(
     iree::vm::bytecode::module
     iree::hal::drivers::local_task::task_driver
     iree::task::api
-    godot-cpp
 )
 
 if(NOT APPLE)

@@ -1,9 +1,8 @@
 #ifndef IREE_LIST_H
 #define IREE_LIST_H
 
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/classes/global_constants.hpp>
-#include <godot_cpp/classes/ref.hpp>
+#include "core/variant/array.h"
+#include "core/object/ref_counted.h"
 
 #include <iree/vm/api.h>
 #include <iree/hal/api.h>

@@ -1,13 +1,11 @@
 #include "iree_instance.h"
 
-#include <godot_cpp/core/error_macros.hpp>
-#include <godot_cpp/classes/global_constants.hpp>
+#include "core/error/error_macros.h"
+#include "core/variant/variant.h"
 
 #include <iree/modules/hal/types.h>
 
 #include "iree_error.h"
-
-using namespace godot;
 
 IREEInstance* IREEInstance::singleton = nullptr;
 

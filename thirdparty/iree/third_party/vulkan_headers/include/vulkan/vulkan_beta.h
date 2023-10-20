@@ -226,8 +226,8 @@ VKAPI_ATTR void VKAPI_CALL vkCmdEncodeVideoKHR(
 
 // VK_EXT_video_encode_h264 is a preprocessor guard. Do not pass it to API calls.
 #define VK_EXT_video_encode_h264 1
-#include "vk_video/vulkan_video_codec_h264std.h"
-#include "vk_video/vulkan_video_codec_h264std_encode.h"
+#include "../vk_video/vulkan_video_codec_h264std.h"
+#include "../vk_video/vulkan_video_codec_h264std_encode.h"
 #define VK_EXT_VIDEO_ENCODE_H264_SPEC_VERSION 12
 #define VK_EXT_VIDEO_ENCODE_H264_EXTENSION_NAME "VK_EXT_video_encode_h264"
 
@@ -425,8 +425,8 @@ typedef struct VkVideoEncodeH264GopRemainingFrameInfoEXT {
 
 // VK_EXT_video_encode_h265 is a preprocessor guard. Do not pass it to API calls.
 #define VK_EXT_video_encode_h265 1
-#include "vk_video/vulkan_video_codec_h265std.h"
-#include "vk_video/vulkan_video_codec_h265std_encode.h"
+#include "../vk_video/vulkan_video_codec_h265std.h"
+#include "../vk_video/vulkan_video_codec_h265std_encode.h"
 #define VK_EXT_VIDEO_ENCODE_H265_SPEC_VERSION 12
 #define VK_EXT_VIDEO_ENCODE_H265_EXTENSION_NAME "VK_EXT_video_encode_h265"
 

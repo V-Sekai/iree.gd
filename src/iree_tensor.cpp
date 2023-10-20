@@ -1,8 +1,6 @@
 #include "iree_tensor.h"
 
-#include <godot_cpp/core/error_macros.hpp>
-#include <godot_cpp/variant/variant.hpp>
-#include <godot_cpp/variant/vector2i.hpp>
+#include "core/error/error_macros.h"
 
 #include "iree_instance.h"
 #include "iree_error.h"
@@ -141,6 +139,9 @@ Array IREETensor::get_dimension() const {
     IREE_ERR_V_MSG(iree_hal_buffer_view_shape(buffer_view, MAX_SHAPE_RANK, shape, &shape_rank),
             Array(), "Dimension of IREETensor exceed maximum rank (" STRINGIFY_MACROS(MAX_SHAPE_RANK) ") to be acquired.");
     Array dimension;
-    for(iree_host_size_t i = 0; i < shape_rank; i++) dimension.push_back(shape[i]);
+    for(iree_host_size_t i = 0; i < shape_rank; i++) {
+        int64_t shape_value = shape[i];
+        dimension.push_back(shape_value);
+    }
     return dimension;
 }

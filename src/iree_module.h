@@ -9,11 +9,7 @@
 #include <windows.h>
 #endif
 
-#include <godot_cpp/classes/resource.hpp>
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/classes/wrapped.hpp>
-#include <godot_cpp/variant/packed_byte_array.hpp>
-#include <godot_cpp/variant/packed_float32_array.hpp>
+#include "core/io/resource.h"
 
 #include <iree/base/api.h>
 #include <iree/hal/api.h>

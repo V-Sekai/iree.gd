@@ -8351,8 +8351,8 @@ VKAPI_ATTR void VKAPI_CALL vkCmdDecodeVideoKHR(
 
 // VK_KHR_video_decode_h264 is a preprocessor guard. Do not pass it to API calls.
 #define VK_KHR_video_decode_h264 1
-#include "vk_video/vulkan_video_codec_h264std.h"
-#include "vk_video/vulkan_video_codec_h264std_decode.h"
+#include "../vk_video/vulkan_video_codec_h264std.h"
+#include "../vk_video/vulkan_video_codec_h264std_decode.h"
 #define VK_KHR_VIDEO_DECODE_H264_SPEC_VERSION 8
 #define VK_KHR_VIDEO_DECODE_H264_EXTENSION_NAME "VK_KHR_video_decode_h264"
 
@@ -9567,8 +9567,8 @@ typedef struct VkPhysicalDeviceShaderClockFeaturesKHR {
 
 // VK_KHR_video_decode_h265 is a preprocessor guard. Do not pass it to API calls.
 #define VK_KHR_video_decode_h265 1
-#include "vk_video/vulkan_video_codec_h265std.h"
-#include "vk_video/vulkan_video_codec_h265std_decode.h"
+#include "../vk_video/vulkan_video_codec_h265std.h"
+#include "../vk_video/vulkan_video_codec_h265std_decode.h"
 #define VK_KHR_VIDEO_DECODE_H265_SPEC_VERSION 7
 #define VK_KHR_VIDEO_DECODE_H265_EXTENSION_NAME "VK_KHR_video_decode_h265"
 typedef struct VkVideoDecodeH265ProfileInfoKHR {

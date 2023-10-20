@@ -1,7 +1,7 @@
 #include "iree_list.h"
 
 #include <iree/modules/hal/module.h>
-#include <godot_cpp/core/error_macros.hpp>
+#include "core/error/error_macros.h"
 
 #include "iree_tensor.h"
 #include "iree_error.h"

@@ -1,11 +1,7 @@
 #include "iree_module.h"
 
-#include <godot_cpp/core/class_db.hpp>
-#include <godot_cpp/core/error_macros.hpp>
-#include <godot_cpp/core/object.hpp>
-#include <godot_cpp/classes/ref.hpp>
-#include <godot_cpp/classes/file_access.hpp>
-#include <godot_cpp/variant/utility_functions.hpp>
+#include "core/object/class_db.h"
+#include "core/io/file_access.h"
 
 #include <iree/modules/hal/types.h>
 #include <iree/modules/hal/module.h>
