@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/KhronosGroup/SPIRV-Cross.git
+	branch = 6e1fb9b09efadee38748e0fd0e6210d329087e89
+	commit = 6e1fb9b09efadee38748e0fd0e6210d329087e89
+	parent = 4674a91b5c6d41400ec5a9889b203a2b5bf223a2
+	method = merge
+	cmdver = 0.4.6
