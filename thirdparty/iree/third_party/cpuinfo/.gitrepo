@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/pytorch/cpuinfo.git
+	branch = main
+	commit = 76d5e8f5b563daa65340a60fce0e9aec73a936df
+	parent = 56858636a71898375d14e486df58d5f204493b88
+	method = merge
+	cmdver = 0.4.6
