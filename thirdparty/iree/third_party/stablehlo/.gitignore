@@ -1,0 +1,9 @@
+bazel-bin
+bazel-out
+bazel-stablehlo
+bazel-testlogs
+build
+llvm-project
+llvm-build
+.vscode
+.cache

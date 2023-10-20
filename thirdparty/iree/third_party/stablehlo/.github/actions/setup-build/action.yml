@@ -1,0 +1,64 @@
+# Copyright 2023 The StableHLO Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# The setup-build action gets everything needed by buildAndTest into the workspace.
+name: "Setup build environment (ninja, ccache, llvm, lld)"
+
+inputs:
+  llvm-version:
+    description: |
+      LLVM version for checkout and build. Used for ccache value and checkout.
+    required: true
+
+runs:
+  # This is a composite action - has a list of steps to execute.
+  using: "composite"
+
+  steps:
+  # Checkout llvm at version specified in input argument.
+  - uses: actions/checkout@v2
+    with:
+      repository: llvm/llvm-project
+      ref: ${{ inputs.llvm-version }}
+      path: llvm-project
+      fetch-depth: 1
+
+  # Get ninja for cmake build.
+  - name: Install Ninja
+    uses: llvm/actions/install-ninja@55d844821959226fab4911f96f37071c1d4c3268
+
+  # Get LLD - Improves build speed on Linux
+  - name: Install LLD
+    shell: bash
+    run: |
+      sudo apt-get install -y lld
+
+  # Setup C++ caching using ccache.
+  # Cache key is a combination of OS arch and LLVM version.
+  - name: Ccache for C++ compilation
+    uses: hendrikmuhs/ccache-action@v1.2
+    with:
+      key: ${{ runner.os }}-stablehlo_build_assets-${{ inputs.llvm-version }}
+      max-size: 4G
+
+  # Install Python/Numpy for API tests
+  - name: Install Python and Pip
+    uses: actions/setup-python@v4
+    with:
+      python-version: '3.10.6'
+      cache: 'pip' # caching pip dependencies
+  - name: Install MLIR python requirements
+    shell: bash
+    run: |
+      pip install -r $GITHUB_WORKSPACE/llvm-project/mlir/python/requirements.txt
