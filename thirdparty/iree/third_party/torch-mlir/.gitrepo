@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/shark-infra/torch-mlir.git
+	branch = 6f81ad72938deb56c6d43bbc01388c1f8f1253c1
+	commit = ae32372385fa9c23fedf11fdf58315ac55ec4692
+	parent = 8d94cf3dddfa26079388185a145dc7c21be6f9db
+	method = merge
+	cmdver = 0.4.6
