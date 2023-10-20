@@ -8,9 +8,12 @@ module_env = env.Clone()
 
 module_env.Append(LIBPATH=['build/lib'])
 
+module_env.Append(CPPPATH=["thirdparty/iree"])
+module_env.Append(CPPPATH=["thirdparty/iree/runtime/src"])
 module_env.Append(LIBS=['libiree-gd.darwin.release.a'])
 
 module_env.add_source_files(env.modules_sources, "*.cpp")
+module_env.add_source_files(env.modules_sources, "src/*.cpp")
 
 def build_library(target, source, env):
     cwd = os.getcwd()
