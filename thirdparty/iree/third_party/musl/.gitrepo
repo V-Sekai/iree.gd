@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/powderluv/musl.git
+	branch = 3f701faace7addc75d16dea8a6cd769fa5b3f260
+	commit = 3f701faace7addc75d16dea8a6cd769fa5b3f260
+	parent = 23d3b8c6a53441166291f0adc169aa14cb43e793
+	method = merge
+	cmdver = 0.4.6
