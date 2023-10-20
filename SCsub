@@ -1,25 +1,24 @@
 import os
 import subprocess
+from SCons.Script import Import
 
 Import('env')
 
 module_env = env.Clone()
 
-cwd = os.getcwd()
-build_dir = os.path.join(cwd, 'build')
-
-os.makedirs(build_dir, exist_ok=True)
-os.chdir(build_dir)
-
-parent_dir = os.path.dirname(build_dir)
-subprocess.run(['cmake', parent_dir], check=True)
-subprocess.run(['cmake', '--build', '.'], check=True)
-
-
 module_env.Append(LIBPATH=['build/lib'])
 
-# Check with the documentation of the external library to see which library
-# files should be included/linked.
 module_env.Append(LIBS=['libiree-gd.darwin.release.a'])
 
 module_env.add_source_files(env.modules_sources, "*.cpp")
+
+def build_library(target, source, env):
+    cwd = os.getcwd()
+    build_dir = os.path.join(cwd, 'build')
+    os.makedirs(build_dir, exist_ok=True)
+    os.chdir(build_dir)
+    parent_dir = os.path.dirname(build_dir)
+    subprocess.run(['cmake', parent_dir], check=True)
+    subprocess.run(['cmake', '--build', '.'], check=True)
+
+module_env.AddPreAction('libiree-gd.darwin.release.a', build_library)
