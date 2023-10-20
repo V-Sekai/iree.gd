@@ -14,9 +14,6 @@
 	path = third_party/pybind11
 	url = https://github.com/pybind/pybind11.git
 	branch = stable
-[submodule "third_party/benchmark"]
-	path = third_party/benchmark
-	url = https://github.com/google/benchmark.git
 [submodule "third_party/tracy"]
 	path = third_party/tracy
 	url = https://github.com/wolfpld/tracy.git
@@ -26,9 +23,6 @@
 [submodule "third_party/spirv_cross"]
 	path = third_party/spirv_cross
 	url = https://github.com/KhronosGroup/SPIRV-Cross.git
-[submodule "third_party/cpuinfo"]
-	path = third_party/cpuinfo
-	url = https://github.com/pytorch/cpuinfo.git
 [submodule "third_party/libyaml"]
 	path = third_party/libyaml
 	url = https://github.com/yaml/libyaml.git
