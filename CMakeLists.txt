@@ -139,7 +139,6 @@ endif()
 # Third-party dependencies
 #-------------------------------------------------------------------------------
 add_subdirectory(${3RD_PARTY_DIR}/iree)
-add_subdirectory(${3RD_PARTY_DIR}/godot-cpp)
 
 #-------------------------------------------------------------------------------
 # `iree.gd` library
