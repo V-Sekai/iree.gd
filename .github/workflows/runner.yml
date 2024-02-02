@@ -1,0 +1,23 @@
+name: Builds
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - "main"
+      - "*-workflow"
+
+jobs:
+  build_android:
+    uses: ./.github/workflows/build_android.yml
+  build_ios:
+    uses: ./.github/workflows/build_ios.yml
+  build_linux_arm:
+    uses: ./.github/workflows/build_linux_arm.yml
+  build_linux:
+    uses: ./.github/workflows/build_linux.yml
+  build_macos:
+    uses: ./.github/workflows/build_macos.yml
+  build_windows:
+    uses: ./.github/workflows/build_windows.yml
