@@ -11,7 +11,6 @@ jobs:
     strategy:
       matrix:
         target: [macos]
-        arch: [x86_64, arm64]
         build_type: [release, debug]
         include:
           # Build type to cmake keyword.
@@ -24,15 +23,6 @@ jobs:
           - os: macos-latest
             target: macos
             lib_suffix: dylib
-
-          # Define toolchain data.
-          - target: macos
-            arch: x86_64
-            cmake_arch_keyword: x86_64
-
-          - target: macos
-            arch: arm64
-            cmake_arch_keyword: arm64
 
     steps:
       - name: Check out code
@@ -65,16 +55,16 @@ jobs:
         shell: bash
         run: cmake --build ${{ github.workspace }}/host-tools-build --target install
 
-      - name: Set up CMake for MacOS
+      - name: Set up CMake for MacOS x86_64
         shell: bash
         run: |
-          if [ ! -d "${{ github.workspace }}/build" ]; then
-            mkdir "${{ github.workspace }}/build"
+          if [ ! -d "${{ github.workspace }}/build_x86_64" ]; then
+            mkdir "${{ github.workspace }}/build_x86_64"
           fi
-          cd "${{ github.workspace }}/build"
+          cd "${{ github.workspace }}/build_x86_64"
           cmake "${{ github.workspace }}" -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.cmake_build_type_keyword }} \
             -DIREE_HOST_BIN_DIR="${{ github.workspace }}/host-tools-build/install/bin" \
-            -DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch_keyword }}" \
+            -DCMAKE_OSX_ARCHITECTURES="x86_64" \
             -DCMAKE_OSX_SYSROOT=$(xcodebuild -version -sdk macosx Path) \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
             -DIREE_ENABLE_WERROR_FLAG=OFF \
@@ -83,24 +73,39 @@ jobs:
             -DIREE_BUILD_TESTS=OFF \
             -DHAVE_STD_REGEX=ON
 
-      - name: Build project
+      - name: Build project x86_64
         shell: bash
-        run: cmake --build "${{ github.workspace }}/build"
+        run: cmake --build "${{ github.workspace }}/build_x86_64"
 
-      - name: Mac Sign
-        uses: ughuuu/godot-cpp-template/.github/actions/sign@add-more-stuff/options-to-build
-        with:
-          bin-path: build/lib/libgodot_whisper.macos.template_release.universal.framework
-          APPLE_CERT_BASE64: ${{ secrets.APPLE_CERT_BASE64 }}
-          APPLE_CERT_PASSWORD: ${{ secrets.APPLE_CERT_PASSWORD }}
-          APPLE_DEV_PASSWORD: ${{ secrets.APPLE_DEV_PASSWORD }}
-          APPLE_DEV_ID: ${{ secrets.APPLE_DEV_ID }}
-          APPLE_DEV_TEAM_ID: ${{ secrets.APPLE_DEV_TEAM_ID }}
-          APPLE_DEV_APP_ID: ${{ secrets.APPLE_DEV_APP_ID }}
+      - name: Set up CMake for MacOS arm64
+        shell: bash
+        run: |
+          if [ ! -d "${{ github.workspace }}/build_arm64" ]; then
+            mkdir "${{ github.workspace }}/build_arm64"
+          fi
+          cd "${{ github.workspace }}/build_arm64"
+          cmake "${{ github.workspace }}" -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.cmake_build_type_keyword }} \
+            -DIREE_HOST_BIN_DIR="${{ github.workspace }}/host-tools-build/install/bin" \
+            -DCMAKE_OSX_ARCHITECTURES="arm64" \
+            -DCMAKE_OSX_SYSROOT=$(xcodebuild -version -sdk macosx Path) \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
+            -DIREE_ENABLE_WERROR_FLAG=OFF \
+            -DIREE_BUILD_COMPILER=OFF \
+            -DIREE_BUILD_SAMPLES=OFF \
+            -DIREE_BUILD_TESTS=OFF \
+            -DHAVE_STD_REGEX=ON
+
+      - name: Build project arm64
+        shell: bash
+        run: cmake --build "${{ github.workspace }}/build_arm64"
+
+      - name: Make Universal lib
+        shell: bash
+        run: lipo -create -output build/lib/${{ matrix.target }}.${{ matrix.build_type }}.framework/${{ matrix.target }}.${{ matrix.build_type }} build_arm64/lib/*iree-gd*.${{ matrix.lib_suffix }} build_x86_64/lib/*iree-gd*.${{ matrix.lib_suffix }}
 
       - name: Export artifact
         uses: actions/upload-artifact@v2
         with:
-          name: "${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.arch }}"
-          path: "${{ github.workspace }}/build/lib/*iree-gd*.${{ matrix.lib_suffix }}"
+          name: iree.gd
+          path: "${{ github.workspace }}/build/lib/${{ matrix.target }}.${{ matrix.build_type }}.framework/${{ matrix.target }}.${{ matrix.build_type }}"
           if-no-files-found: error

@@ -92,9 +92,13 @@ jobs:
         shell: bash
         run: cmake --build "${{ github.workspace }}/build"
 
+      - name: Rename lib
+        shell: bash
+        run: rename "build/lib/*iree-gd*.${{ matrix.lib_suffix }}" "build/${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.arch }}"
+      
       - name: Export artifact
         uses: actions/upload-artifact@v2
         with:
-          name: "${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.arch }}"
-          path: "${{ github.workspace }}/build/lib/*iree-gd*.${{ matrix.lib_suffix }}"
+          name: iree.gd
+          path: ${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.arch }}
           if-no-files-found: error
