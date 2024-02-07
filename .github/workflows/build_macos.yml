@@ -102,6 +102,11 @@ jobs:
         shell: bash
         run: cmake --build "${{ github.workspace }}/build_arm64"
 
+      - name: Show build files
+        shell: bash
+        working-directory: build
+        run: ls -lR
+
       - name: Make Universal lib
         shell: bash
         run: lipo -create -output build/lib/${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.framework/${{ matrix.target }}.${{ matrix.build_type }} build_arm64/lib/*iree-gd*.${{ matrix.lib_suffix }} build_x86_64/lib/*iree-gd*.${{ matrix.lib_suffix }}
