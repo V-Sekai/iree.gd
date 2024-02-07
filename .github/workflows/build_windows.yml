@@ -10,6 +10,7 @@ jobs:
 
     strategy:
       matrix:
+        float_precision: [single,double]
         target: [windows]
         arch: [x86_64]
         build_type: [release, debug]
@@ -51,7 +52,7 @@ jobs:
         run: |
           if not exist "${{ github.workspace }}\\build" mkdir "${{ github.workspace }}\\build"
           cd "${{ github.workspace }}\\build"
-          cmake "${{ github.workspace }}" -G Ninja -DCMAKE_BUILD_TYPE="${{ matrix.cmake_build_type_keyword }}" -DIREE_ENABLE_WERROR_FLAG=OFF
+          cmake "${{ github.workspace }}" -G Ninja -DCMAKE_BUILD_TYPE="${{ matrix.cmake_build_type_keyword }}" -DIREE_ENABLE_WERROR_FLAG=OFF -DFLOAT_PRECISION=${{ matrix.float_precision }}
 
       - name: Build project
         shell: bash
@@ -59,7 +60,7 @@ jobs:
 
       - name: Rename lib
         shell: bash
-        run: rename "build/lib/*iree-gd*.${{ matrix.lib_suffix }}" "build/${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.arch }}"
+        run: rename "build/lib/*iree-gd*.${{ matrix.lib_suffix }}" "build/${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}"
       
       - name: Export artifact
         uses: actions/upload-artifact@v2
