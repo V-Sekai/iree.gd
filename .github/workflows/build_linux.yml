@@ -68,7 +68,7 @@ jobs:
 
       - name: Rename lib
         shell: bash
-        run: rename "build/lib/*iree-gd*.${{ matrix.lib_suffix }}" "build/${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}"
+        run: mv "build/lib/*iree-gd*.${{ matrix.lib_suffix }}" "build/${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}"
       
       - name: Export artifact
         uses: actions/upload-artifact@v2
