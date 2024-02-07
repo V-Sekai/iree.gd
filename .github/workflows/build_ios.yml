@@ -94,6 +94,11 @@ jobs:
         shell: bash
         run: cmake --build "${{ github.workspace }}/build"
 
+      - name: Show build files
+        shell: bash
+        working-directory: build
+        run: ls -lR
+      
       - name: Rename lib
         shell: bash
         run: mv "build/lib/*iree-gd*.${{ matrix.lib_suffix }}" "build/${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}"
