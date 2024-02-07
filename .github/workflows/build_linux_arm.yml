@@ -90,7 +90,7 @@ jobs:
             -DIREE_ENABLE_WERROR_FLAG=OFF \
             -DIREE_ENABLE_CPUINFO=OFF \
             -DIREE_BUILD_SAMPLES=OFF \
-            -DCMAKE_CXX_FLAGS="-Wno-psabi"
+            -DCMAKE_CXX_FLAGS="-Wno-psabi" \
             -DFLOAT_PRECISION=${{ matrix.float_precision }}
 
       - name: Build project

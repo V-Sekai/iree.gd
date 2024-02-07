@@ -87,7 +87,7 @@ jobs:
             -DIREE_BUILD_COMPILER=OFF \
             -DIREE_BUILD_SAMPLES=OFF \
             -DIREE_BUILD_TESTS=OFF \
-            -DCMAKE_SYSTEM_NAME="iOS"
+            -DCMAKE_SYSTEM_NAME="iOS" \
             -DFLOAT_PRECISION=${{ matrix.float_precision }}
 
       - name: Build project
