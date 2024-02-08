@@ -2,10 +2,11 @@ name: Lint
 
 on:
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   build:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out code
