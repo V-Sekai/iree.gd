@@ -25,7 +25,6 @@ jobs:
           # Define host for each target.
           - os: ubuntu-latest
             target: android
-            lib_suffix: so
 
           # Define toolchain data.
           - target: android
@@ -69,7 +68,6 @@ jobs:
           ndk-version: r25c
 
       - name: Set up CMake for Android
-        if: matrix.target == 'android'
         shell: bash
         run: |
           if [ ! -d "${{ github.workspace }}/build" ]; then
@@ -86,19 +84,10 @@ jobs:
       - name: Build project
         shell: bash
         run: ninja -C "${{ github.workspace }}/build"
-
-      - name: Show build files
-        shell: bash
-        working-directory: build
-        run: ls -lR
-
-      - name: Rename lib
-        shell: bash
-        run: mv "build/lib/*iree-gd*.${{ matrix.lib_suffix }}" "build/${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}"
-      
+   
       - name: Export artifact
         uses: actions/upload-artifact@v2
         with:
           name: iree.gd
-          path: ${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.arch }}
+          path: build/lib/libiree-gd.${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}.so
           if-no-files-found: error

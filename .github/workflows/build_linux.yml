@@ -25,7 +25,6 @@ jobs:
           # Define host for each target.
           - os: ubuntu-latest
             target: linux
-            lib_suffix: so
 
           # Define toolchain data.
           - target: linux
@@ -71,13 +70,9 @@ jobs:
         working-directory: build
         run: ls -lR
 
-      - name: Rename lib
-        shell: bash
-        run: mv "build/lib/*iree-gd*.${{ matrix.lib_suffix }}" "build/${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}"
-      
       - name: Export artifact
         uses: actions/upload-artifact@v2
         with:
           name: iree.gd
-          path: ${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.arch }}
+          path: build/lib/libiree-gd.${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}.so
           if-no-files-found: error

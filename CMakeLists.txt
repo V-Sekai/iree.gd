@@ -175,7 +175,7 @@ add_subdirectory(${3RD_PARTY_DIR}/godot-cpp)
 # `iree.gd` library
 #-------------------------------------------------------------------------------
 
-set(LIB_NAME ${PROJECT_NAME}.${SYSTEM_NAME}.${BUILD_TYPE}.${ARCH})
+set(LIB_NAME ${PROJECT_NAME}.${SYSTEM_NAME}.${BUILD_TYPE}.${FLOAT_PRECISION}.${ARCH})
 file(GLOB_RECURSE SRCS ${SRC_DIR}/*.c**)
 file(GLOB_RECURSE HEADERS ${SRC_DIR}/*.h**)
 

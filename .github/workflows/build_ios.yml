@@ -24,7 +24,6 @@ jobs:
 
           - os: macos-latest
             target: ios
-            lib_suffix: dylib
 
           # Define toolchain data.
           - target: ios
@@ -93,19 +92,10 @@ jobs:
       - name: Build project
         shell: bash
         run: cmake --build "${{ github.workspace }}/build"
-
-      - name: Show build files
-        shell: bash
-        working-directory: build
-        run: ls -lR
-      
-      - name: Rename lib
-        shell: bash
-        run: mv "build/lib/*iree-gd*.${{ matrix.lib_suffix }}" "build/${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}"
-      
+  
       - name: Export artifact
         uses: actions/upload-artifact@v2
         with:
           name: iree.gd
-          path: ${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.arch }}
+          path: build/lib/libiree-gd.${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}.dylib
           if-no-files-found: error
