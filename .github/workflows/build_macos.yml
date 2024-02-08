@@ -71,7 +71,7 @@ jobs:
             -DIREE_BUILD_COMPILER=OFF \
             -DIREE_BUILD_SAMPLES=OFF \
             -DIREE_BUILD_TESTS=OFF \
-            -DHAVE_STD_REGEX=ON
+            -DHAVE_STD_REGEX=ON \
             -DFLOAT_PRECISION=${{ matrix.float_precision }}
 
       - name: Build project x86_64
