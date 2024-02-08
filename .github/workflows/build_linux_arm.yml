@@ -88,6 +88,7 @@ jobs:
             -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/cmake/${{ matrix.cmake_toolchain_file }}" \
             -DIREE_ENABLE_WERROR_FLAG=OFF \
             -DIREE_ENABLE_CPUINFO=OFF \
+            -DCMAKE_SYSTEM_PROCESSOR="${{ matrix.arch }}" \
             -DIREE_BUILD_SAMPLES=OFF \
             -DCMAKE_CXX_FLAGS="-Wno-psabi" \
             -DFLOAT_PRECISION=${{ matrix.float_precision }}
