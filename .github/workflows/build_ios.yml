@@ -93,6 +93,11 @@ jobs:
         shell: bash
         run: cmake --build "${{ github.workspace }}/build"
   
+      - name: Show build files
+        shell: bash
+        working-directory: build
+        run: ls -lR
+
       - name: Export artifact
         uses: actions/upload-artifact@v2
         with:

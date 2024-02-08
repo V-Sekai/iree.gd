@@ -29,11 +29,13 @@ jobs:
           # Define toolchain data.
           - target: linux
             arch: arm64
+            artifact_extension: arm64
             dependencies: gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu g++-aarch64-linux-gnu
             cmake_toolchain_file: linux_arm64.toolchain.cmake
 
           - target: linux
             arch: arm32
+            artifact_extension: arm
             dependencies: gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf g++-arm-linux-gnueabihf
             cmake_toolchain_file: linux_arm32.toolchain.cmake
 
@@ -106,5 +108,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: iree.gd
-          path: build/lib/libiree-gd.${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.arch }}.so
+          path: build/lib/libiree-gd.${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.${{ matrix.artifact_extension }}.so
           if-no-files-found: error
