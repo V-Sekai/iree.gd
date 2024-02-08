@@ -9,15 +9,23 @@ on:
       - "*-workflow"
 
 jobs:
+  lint:
+    uses: ./.github/workflows/lint.yml
   build_android:
+    needs: [lint]
     uses: ./.github/workflows/build_android.yml
   build_ios:
+    needs: [lint]
     uses: ./.github/workflows/build_ios.yml
   build_linux_arm:
+    needs: [lint]
     uses: ./.github/workflows/build_linux_arm.yml
   build_linux:
+    needs: [lint]
     uses: ./.github/workflows/build_linux.yml
   build_macos:
+    needs: [lint]
     uses: ./.github/workflows/build_macos.yml
   build_windows:
+    needs: [lint]
     uses: ./.github/workflows/build_windows.yml
