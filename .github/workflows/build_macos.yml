@@ -103,7 +103,12 @@ jobs:
 
       - name: Show build files
         shell: bash
-        working-directory: build
+        working-directory: build_arm64
+        run: ls -lR
+
+      - name: Show build files
+        shell: bash
+        working-directory: build_x86_64
         run: ls -lR
 
       - name: Make Universal lib
