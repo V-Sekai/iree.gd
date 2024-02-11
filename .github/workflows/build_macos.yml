@@ -113,7 +113,7 @@ jobs:
 
       - name: Make directories
         shell: bash
-        run: mkdir -p build/lib
+        run: mkdir -p build/lib/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.framework
 
       - name: Make Universal lib
         shell: bash
