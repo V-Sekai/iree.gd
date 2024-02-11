@@ -113,11 +113,11 @@ jobs:
 
       - name: Make Universal lib
         shell: bash
-        run: lipo -create -output build/lib/libiree-gd.${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.framework/libiree-gd.${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.dylib build_arm64/lib/libiree-gd.${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.dylib build_x86_64/lib/libiree-gd.${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.dylib
+        run: lipo -create -output build/lib/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.framework/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.dylib build_arm64/lib/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.dylib build_x86_64/lib/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.dylib
 
       - name: Export artifact
         uses: actions/upload-artifact@v2
         with:
           name: iree.gd
-          path: build/lib/libiree-gd.${{ matrix.target }}.${{ matrix.build_type }}.${{ matrix.float_precision }}.framework/**
+          path: build/lib/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.framework/**
           if-no-files-found: error
