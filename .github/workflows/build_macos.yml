@@ -111,6 +111,10 @@ jobs:
         working-directory: build_x86_64
         run: ls -lR
 
+      - name: Make directories
+        shell: bash
+        run: mkdir -p build/lib
+
       - name: Make Universal lib
         shell: bash
         run: lipo -create -output build/lib/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.framework/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.dylib build_arm64/lib/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.arm64.dylib build_x86_64/lib/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.x86_64.dylib
