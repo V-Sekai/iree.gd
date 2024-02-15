@@ -247,5 +247,5 @@ add_custom_command(
     TARGET ${LIB_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy 
             $<TARGET_FILE:${LIB_NAME}> 
-            ${SAMPLE_DIR}/extensions/iree-gd/$<TARGET_FILE_NAME:${LIB_NAME}>
+            ${SAMPLE_DIR}/addons/iree-gd/$<TARGET_FILE_NAME:${LIB_NAME}>
 )
