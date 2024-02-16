@@ -148,5 +148,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: iree.gd
-          path: build/lib/libiree-gd.darwin.${{ matrix.build_type }}.${{ matrix.float_precision }}.framework/**
+          path: sample/**/*.so
           if-no-files-found: error
