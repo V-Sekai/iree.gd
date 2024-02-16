@@ -74,5 +74,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: iree.gd
-          path: sample/**/*.so
+          path: |
+            sample/**/*.so
+            sample/**/*.gdextension
           if-no-files-found: error

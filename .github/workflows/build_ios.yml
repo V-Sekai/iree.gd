@@ -102,5 +102,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: iree.gd
-          path: sample/**/*.dylib
+          path: |
+            sample/**/*.dylib
+            sample/**/*.gdextension
           if-no-files-found: error

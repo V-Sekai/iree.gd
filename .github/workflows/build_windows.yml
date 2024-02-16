@@ -66,5 +66,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: iree.gd
-          path: sample/**/*.dll
+          path: |
+            sample/**/*.dll
+            sample/**/*.gdextension
           if-no-files-found: error
