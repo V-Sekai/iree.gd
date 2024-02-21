@@ -152,7 +152,7 @@ jobs:
           APPLE_DEV_APP_ID: ${{ secrets.APPLE_DEV_APP_ID }}
 
       - name: Export artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: iree.gd
           path: |
