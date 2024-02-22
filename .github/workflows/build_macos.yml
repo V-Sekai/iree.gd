@@ -159,5 +159,5 @@ jobs:
             sample/**/*.dylib
             sample/**/*.plist
             sample/**/*.gdextension
-            sample/**/*.CodeResources
+            sample/**/CodeResources
           if-no-files-found: error
