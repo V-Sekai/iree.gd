@@ -68,7 +68,7 @@ void IREEModule::release() {
 	}
 }
 
-TypedArray<IREEETensor> IREEModule::process(const String &p_func_name, const Array &p_args) {
+TypedArray<IREETensor> IREEModule::process(const String &p_func_name, const Array &p_args) {
 	if (!is_captured()) {
 		Error status = capture();
 		if (status != OK)
@@ -143,16 +143,13 @@ IREEModule::IREEModule() :
 IREEModule::IREEModule(IREEModule &&p_module) :
 		bytecode_data(p_module.bytecode_data),
 		bytecode_module(p_module.bytecode_module),
-		context(p_module.context),
-		thread(p_module.thread) {
+		context(p_module.context) {
 	p_module.bytecode_data.clear();
 	p_module.bytecode_module = nullptr;
 	p_module.context = nullptr;
 }
 
 IREEModule::~IREEModule() {
-	if (thread->is_started())
-		thread->wait_to_finish();
 	unload();
 }
 

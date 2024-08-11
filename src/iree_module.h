@@ -28,7 +28,7 @@ private:
 
 	Error capture();
 	void release();
-	TypedArray<IREEETensor> process(const String &p_func_name, const Array &p_args);
+	TypedArray<IREETensor> process(const String &p_func_name, const Array &p_args);
 	void process_return_via_signal(const String &p_func_name, const Array &p_args);
 	void on_process_completed(const Array &p_result);
 
@@ -44,7 +44,7 @@ public:
 
 	Error load(const String &p_path);
 	void unload();
-	TypedArray<IREEETensor> call_module(const String &p_func_name, const TypedArray<IREEETensor> &p_args);
+	TypedArray<IREETensor> call_module(const String &p_func_name, const TypedArray<IREETensor> &p_args);
 };
 
 } // namespace godot
