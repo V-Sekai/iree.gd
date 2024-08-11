@@ -7,6 +7,7 @@
 #include <godot_cpp/variant/packed_byte_array.hpp>
 #include <godot_cpp/variant/packed_float32_array.hpp>
 #include <godot_cpp/variant/string.hpp>
+#include <godot_cpp/variant/typed_array.hpp>
 
 #include <iree/base/api.h>
 #include <iree/hal/api.h>
@@ -25,11 +26,9 @@ private:
 	iree_vm_module_t *bytecode_module;
 	iree_vm_context_t *context;
 
-	Ref<Thread> thread;
-
 	Error capture();
 	void release();
-	Array process(const String &p_func_name, const Array &p_args);
+	TypedArray<IREEETensor> process(const String &p_func_name, const Array &p_args);
 	void process_return_via_signal(const String &p_func_name, const Array &p_args);
 	void on_process_completed(const Array &p_result);
 
@@ -45,7 +44,7 @@ public:
 
 	Error load(const String &p_path);
 	void unload();
-	Ref<IREEModule> call_module(const String &p_func_name, const Array &p_args);
+	TypedArray<IREEETensor> call_module(const String &p_func_name, const TypedArray<IREEETensor> &p_args);
 };
 
 } // namespace godot
